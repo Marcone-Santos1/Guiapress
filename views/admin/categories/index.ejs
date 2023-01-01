@@ -1,0 +1,56 @@
+<%- include('../../partials/header.ejs') %>
+
+    <body>
+        <%- include('../../partials/navbar.ejs') %>
+            <div class="container">
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h2 class="h2">categorias</h2>
+                    <a href="/admin/categories/new" class="btn btn-success">Cadastrar categoria</a>
+                </div>
+                <hr>
+                <table class="table table-striped table-inverse">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Título</th>
+                            <th>Slug</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%for (category of categories) {%>
+                            <tr>
+                                <td scope="row">
+                                    <%= category.id%>
+                                </td>
+                                <td>
+                                    <%= category.title%>
+                                </td>
+                                <td>
+                                    <%= category.slug%>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-sm btn-warning" href="/admin/categories/edit/<%= category.id %>" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+                                    <form action="/categories/delete" method="post" style="display: inline;" onsubmit="confimarExclusao(event, this)">
+                                        <input type="hidden" name="id" value="<%= category.id%>">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Excluir"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <%}%>
+                    </tbody>
+                </table>
+            </div>
+    </body>
+    <%- include('../../partials/footer.ejs') %>
+
+    <script>
+        function confimarExclusao(event, form) {
+            event.preventDefault();
+            let decision = confirm("Deseja deletar essa categoria?")
+            if (decision) {
+                form.submit();
+            }
+        }   
+    </script>
