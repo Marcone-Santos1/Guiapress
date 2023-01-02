@@ -27,8 +27,67 @@ connection.authenticate()
     })
 
 app.get('/', (req, res) => {
-    res.render('index');
+    Article.findAll({
+        order: [
+            ['id', 'desc']
+        ]
+    })
+        .then(articles => {
+            Category.findAll().then(categories => {
+                res.render('index', { articles, categories });
+            })
+        })
 });
+
+app.get('/:slug', (req, res) => {
+    let slug = req.params.slug
+    Article.findOne({
+        where: {
+            slug
+        }
+    })
+        .then(article => {
+            let validation = article != undefined && article != '' && article != null;
+            if (validation) {
+                Category.findAll().then(categories => {
+                    res.render('article', { article, categories });
+                })
+            } else {
+                res.redirect('/');
+            }
+        })
+        .catch(error => {
+            res.redirect('/');
+        })
+});
+
+app.get('/category/:slug', (req, res) => {
+    let slug = req.params.slug
+
+    Category.findOne({
+        where: {
+            slug
+        },
+        include: [{model: Article}]
+    })  
+    .then(category => {
+        let validation = category != undefined && category != '' && category != null;
+        if (validation) {
+
+            Category.findAll().then(categories => {
+                res.render('index', { articles: category.articles, categories });
+            })
+
+        } else {
+            res.redirect('/');
+        }
+    })
+    .catch(error => {
+        res.redirect('/');
+    })
+});
+
+
 
 app.use('/', categoriesController);
 app.use('/', articlesController);
