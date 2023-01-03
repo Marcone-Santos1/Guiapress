@@ -1,0 +1,59 @@
+<%- include('../../partials/header.ejs') %>
+
+    <body>
+        <%- include('../../partials/navbar.ejs') %>
+            <div class="container col-md-10">
+                <hr>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Cadastro de Artigo</h2>
+                    </div>
+                    <form action="/articles/update" method="post" class="">
+                        <input type="hidden" name="id" id="" value="<%= article.id %>">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="">Titulo do Artigo</label>
+                                <input type="text" name="title" id="" class="form-control"
+                                    placeholder="Digite o titulo do Artigo" value="<%= article.title %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Categoria do Artigo</label>
+                                <select name="category" id="" class="form-control">
+                                    <% for (category of categories) { %>
+                                        <% if (category.id == article.categoryId) {%>
+                                            <option value="<%= category.id %>" selected>
+                                                <%=category.title%>
+                                            </option>
+                                        <%} else {%>
+                                            <option value="<%= category.id %>">
+                                                <%=category.title%>
+                                            </option>
+                                        <%}%>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Artigo</label>
+                                <textarea class="form-control" name="body" id="article" rows="10">
+                                <%- article.body %>
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </body>
+    <%- include('../../partials/footer.ejs') %>
+        <script>
+            tinymce.init({
+                selector: '#article',
+                plugins: [
+                    'advlist', 'autolink', 'link', 'image', 'lists', 'print', 'preview', 'hr', 'searchreplace', 'wordcount', 'fullscreen', 'insertdatetime', 'media', 'save', 'table', 'paste', 'emoticons'
+                ],
+                table_appearance_options: false,
+                language: "pt_BR",
+            });
+        </script>

@@ -6,37 +6,17 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <!-- <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li> -->
-            <%for (category of categories) {%>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/category/<%= category.slug %>"><%= category.title %><span class="sr-only">(current)</span></a>
-                </li>
-            <%}%>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="/admin/categories/new">Ca</a>
-            </li> -->
-            <!-- <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">Categoria</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a class="dropdown-item" href="/admin/categories/new">Cadastrar</a>
-                    <a class="dropdown-item" href="/admin/categories">Listar</a>
-                </div>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">Artigos</a>
+                    aria-expanded="false">Categorias</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a class="dropdown-item" href="/admin/articles/new">Cadastrar</a>
-                    <a class="dropdown-item" href="/admin/articles">Listar</a>
+                    <%for (category of categories) {%>
+                        <a class="dropdown-item" href="/category/<%= category.slug %>">
+                            <%= category.title %>
+                        </a>
+                        <%}%>
                 </div>
             </li>
-        </ul> -->
-        <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
+        </ul>
     </div>
 </nav>
