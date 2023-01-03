@@ -1,13 +1,16 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const connection = require('./database/database')
+const session = require('express-session')
 
 
 const categoriesController = require('./categories/CategoriesController');;
 const articlesController = require('./articles/ArticlesController');
+const usersController = require('./user/UserController');
 
 const Article = require('./articles/Article');
 const Category = require('./categories/Category');
+const User = require('./user/User');
 
 const app = express();
 const port = 8080;
@@ -30,7 +33,8 @@ app.get('/', (req, res) => {
     Article.findAll({
         order: [
             ['id', 'desc']
-        ]
+        ],
+        limit: 4
     })
         .then(articles => {
             Category.findAll().then(categories => {
@@ -68,29 +72,31 @@ app.get('/category/:slug', (req, res) => {
         where: {
             slug
         },
-        include: [{model: Article}]
-    })  
-    .then(category => {
-        let validation = category != undefined && category != '' && category != null;
-        if (validation) {
+        include: [{ model: Article }]
+    })
+        .then(category => {
+            let validation = category != undefined && category != '' && category != null;
+            if (validation) {
 
-            Category.findAll().then(categories => {
-                res.render('index', { articles: category.articles, categories });
-            })
+                Category.findAll().then(categories => {
+                    res.render('index', { articles: category.articles, categories });
+                })
 
-        } else {
+            } else {
+                res.redirect('/');
+            }
+        })
+        .catch(error => {
             res.redirect('/');
-        }
-    })
-    .catch(error => {
-        res.redirect('/');
-    })
+        })
 });
 
 
 
 app.use('/', categoriesController);
 app.use('/', articlesController);
+app.use('/', usersController);
+
 
 app.listen(port, () => {
     console.log(`🚀 Servidor iniciado com sucesso na porta ${port}`);

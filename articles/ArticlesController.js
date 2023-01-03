@@ -40,7 +40,7 @@ router.post('/articles/save', (req, res) => {
 router.get('/admin/articles/edit/:id', (req, res) => {
 
     let id = req.params.id;
-    
+
     let validation = id != undefined && id != '' && id != null && !isNaN(id);
     Article.findByPk(id).then((article) => {
         if (validation) {
@@ -97,5 +97,42 @@ router.post('/articles/delete', (req, res) => {
         res.redirect('/admin/articles');
     }
 })
+
+router.get('/articles/page/:num', (req, res) => {
+    let page = req.params.num
+    let offset = 0
+    if (isNaN(page) || page == 1) {
+        offset = 0
+    } else {
+        offset = (parseInt(page) - 1) * 4
+    }
+    Article.findAndCountAll({
+        order: [
+            ['id', 'desc']
+        ],
+        limit: 4,
+        offset: offset
+    }).then(articles => {
+
+        let next;
+
+        if (offset + 4 >= articles.count) {
+            next = false
+        } else {
+            next = true
+        }
+
+        let result = {
+            page: parseInt(page),
+            next,
+            articles
+        }
+
+        Category.findAll().then(categories => {
+            res.render('admin/articles/page', { result, categories })
+        })
+    })
+});
+
 
 module.exports = router;

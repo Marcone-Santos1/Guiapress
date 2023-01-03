@@ -9,12 +9,13 @@
                     <a href="/admin/articles/new" class="btn btn-success">Cadastrar artigo</a>
                 </div>
                 <hr>
+                
                 <table class="table table-striped table-inverse">
                     <thead class="thead-inverse">
                         <tr>
                             <th>#</th>
-                            <th>Título</th>
-                            <th>Slug</th>
+                            <th class="col-sm-2">Título</th>
+                            <th class="col-sm-3">Slug</th>
                             <th>Categoria</th>
                             <th>Ações</th>
                         </tr>
@@ -25,10 +26,10 @@
                                 <td scope="row">
                                     <%= article.id%>
                                 </td>
-                                <td>
+                                <td class="text-break">
                                     <%= article.title%>
                                 </td>
-                                <td>
+                                <td class="text-break">
                                     <%= article.slug%>
                                 </td>
                                 <td>

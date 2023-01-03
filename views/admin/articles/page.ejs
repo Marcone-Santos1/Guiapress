@@ -1,18 +1,9 @@
-<%- include('partials/header.ejs') %>
+<%- include('../../partials/header.ejs') %>
 
     <body>
-        <%- include('partials/homenavbar.ejs') %>
+        <%- include('../../partials/homenavbar.ejs') %>
             <div class="container">
-                <div class="jumbotron mt-3">
-                    <h1 class="display-4">Bem-vindo!</h1>
-                    <p class="lead">Blog de artigos</p>
-                    <!-- <hr class="my-4"> -->
-                    <!-- <p></p> -->
-                    <!-- <p class="lead"> -->
-                        <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
-                    <!-- </p> -->
-                </div>
-                <%for (article of articles) {%>
+                <%for (article of result.articles.rows) {%>
 
                     <div class="card text-white bg-primary mb-3 mt-3">
                         <div class="card-header">
@@ -28,11 +19,15 @@
                     <div class="row">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-                              
-                              <li class="page-item"><a class="page-link" href="/articles/page/2 ">Next</a></li>
+                            <% if (result.page > 1) { %>
+                                <li class="page-item"><a class="page-link" href="/articles/page/<%= result.page - 1 %>">Previous</a></li>
+                            <% } %>
+                            <% if (result.next) { %>
+                                <li class="page-item"><a class="page-link" href="/articles/page/<%= result.page + 1 %>">Next</a></li>
+                                <% } %>
                             </ul>
                           </nav>
                     </div>
             </div>
     </body>
-    <%- include('partials/footer.ejs') %>
+    <%- include('../../partials/footer.ejs') %>

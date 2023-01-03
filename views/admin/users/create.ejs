@@ -1,0 +1,37 @@
+<%- include('../../partials/header.ejs') %>
+
+    <body>
+        <%- include('../../partials/navbar.ejs') %>
+        <hr>
+        <div class="container mt-4">
+            <% try { %>
+                <% if (erro) { %>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <%= erro %>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <% } %>    
+            <% } catch (err) { %>
+            <% } %>
+            
+        
+            <div class="card">
+                <div class="card-header">
+                    Criação de Usuário
+                </div>
+                <div class="card-body">
+                    <form action="/user/create" method="post">
+                        <label for="">E-mail</label>
+                        <input type="email" name="email" id="" class="form-control" placeholder="Digite o seu Email">
+                        <label for="" class="mt-2">Password</label>
+                        <input type="password" name='password' class="form-control" placeholder="Digite a sua Senha">
+                        <button type="submit" class="btn btn-success mt-2 btn-block">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+    <%- include('../../partials/footer.ejs') %>
