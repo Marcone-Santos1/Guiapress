@@ -1,7 +1,7 @@
 <%- include('../../partials/header.ejs') %>
 
     <body>
-        <%- include('../../partials/navbar.ejs') %>
+        <!-- <%- include('../../partials/navbar.ejs') %> -->
         <hr>
         <div class="container mt-4">
             <% try { %>
@@ -15,19 +15,18 @@
                 <% } %>    
             <% } catch (err) { %>
             <% } %>
-            
         
             <div class="card">
                 <div class="card-header">
-                    Criação de Usuário
+                    Login Admin
                 </div>
                 <div class="card-body">
-                    <form action="/user/create" method="post">
+                    <form action="/authenticate" method="post">
                         <label for="">E-mail</label>
                         <input type="email" name="email" id="" class="form-control" placeholder="Digite o seu Email" required>
                         <label for="" class="mt-2">Password</label>
                         <input type="password" name='password' class="form-control" placeholder="Digite a sua Senha" required minlength="8">
-                        <button type="submit" class="btn btn-success mt-2 btn-block">Cadastrar</button>
+                        <button type="submit" class="btn btn-success mt-2 btn-block">Login</button>
                     </form>
                 </div>
             </div>

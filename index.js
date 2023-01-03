@@ -16,6 +16,14 @@ const app = express();
 const port = 8080;
 
 app.set('view engine', 'ejs');
+
+app.use(session({
+    secret: 'mamaco',
+    cookie: {
+        maxAge: 7200000
+    }
+}))
+
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,6 +38,7 @@ connection.authenticate()
     })
 
 app.get('/', (req, res) => {
+
     Article.findAll({
         order: [
             ['id', 'desc']
@@ -44,7 +53,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:slug', (req, res) => {
+
+
     let slug = req.params.slug
+    // if (slug == 'login') {
+    //     res.redirect('/login')
+    // }
     Article.findOne({
         where: {
             slug
